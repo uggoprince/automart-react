@@ -1,6 +1,13 @@
 // context/AuthContext.tsx
-import { createContext, useRef, useContext, ReactNode, useState, useEffect } from 'react';
-import { getAuth } from '../utilities/storage';
+import {
+  createContext,
+  useRef,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from "react";
+import { getAuth } from "../utilities/storage";
 
 // Define the context type
 interface AuthContextType {
@@ -19,7 +26,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   let storedUser: any = getAuth();
   const [auth, setAuth] = useState(storedUser);
-    // const storedUser = getAuth();
+  // const storedUser = getAuth();
   // useRef to hold the auth token
   useEffect(() => {
     storedUser = getAuth();

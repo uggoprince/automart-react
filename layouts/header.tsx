@@ -1,11 +1,11 @@
-import { Component } from 'react';
-import { FiLogIn, FiUserPlus } from 'react-icons/fi';
-import Header from '../components/header'
-import HeaderLink from '../components/link';
-import Navbar from '../components/navbar';
+import React, { Component } from "react";
+import { FiLogIn, FiUserPlus } from "react-icons/fi";
+import Header from "../components/header";
+import HeaderLink from "../components/link";
+import Navbar from "../components/navbar";
 
 interface HeaderLayoutTypeProps {
-  authData: any;
+  authData: { isAuthenticated: boolean; user: { name: string; email: string } } | null;
 }
 
 export default class HeaderLayout extends Component<HeaderLayoutTypeProps> {
@@ -17,9 +17,14 @@ export default class HeaderLayout extends Component<HeaderLayoutTypeProps> {
       <Header>
         <Navbar>
           <HeaderLink href="/" text="Home" />
-          {!authData && (<><HeaderLink Icon={FiLogIn} href="/signin" text="Sign In" /><HeaderLink Icon={FiUserPlus} href="/signup" text="Sign Up" /></>)}
+          {!authData && (
+            <>
+              <HeaderLink Icon={FiLogIn} href="/signin" text="Sign In" />
+              <HeaderLink Icon={FiUserPlus} href="/signup" text="Sign Up" />
+            </>
+          )}
         </Navbar>
       </Header>
     );
   }
-};
+}

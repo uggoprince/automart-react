@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { FiPhoneCall, FiCompass } from 'react-icons/fi';
+import { FiPhoneCall, FiCompass } from "react-icons/fi";
 
 const TableRow = (props: any) => {
   const { title, value } = props;
   return (
     <tr>
-      <td className="align-text-top">{title}</td><td className="text-slate-500 pl-4 py-1 align-text-top">{value}</td>
+      <td className="align-text-top">{title}</td>
+      <td className="text-slate-500 pl-4 py-1 align-text-top">{value}</td>
     </tr>
   );
 };
@@ -22,9 +23,7 @@ export const CardBig = ({ car }: any) => {
         h-auto
         mx-auto"
     >
-
       <div className="w-full lg:flex lg:flex-row justify-between">
-
         <div
           className=" w-full
             min-h-[200px]
@@ -38,37 +37,36 @@ export const CardBig = ({ car }: any) => {
             src={car.imageUrl}
             layout="responsive"
             width={400}
-            height={280} className="" />
+            height={280}
+            className=""
+          />
         </div>
 
-        <div className='p-4
+        <div
+          className="p-4
           bg-white
           box-border
           lg:ml-4
           font-semibold
           text-slate-700
-          lg:w-4/12 shadow-lg'
+          lg:w-4/12 shadow-lg"
         >
           <div>
-            <div className='text-slate-800 font-semibold text-3xl'>
+            <div className="text-slate-800 font-semibold text-3xl">
               {car.title}
             </div>
-            <div className='text-indigo-600 font-semibold text-xl pt-4'>
+            <div className="text-indigo-600 font-semibold text-xl pt-4">
               {car.price}
             </div>
           </div>
           <div className="pt-4 text-slate-600 font-semibold">
             <div className="pb-2">
               <FiPhoneCall className="inline text-indigo-600" />
-              <span className="">
-                {" "}{car.ownerDetails.phoneNumber}
-              </span>
+              <span className=""> {car.ownerDetails.phoneNumber}</span>
             </div>
             <div>
               <FiCompass className=" text-indigo-600 inline" />
-              <span className="">
-                {" "}{car.ownerDetails.address}
-              </span>
+              <span className=""> {car.ownerDetails.address}</span>
             </div>
           </div>
         </div>
@@ -81,16 +79,18 @@ export const CardBig = ({ car }: any) => {
               <TableRow title={"Make"} value={car.manufacturer} />
               <TableRow title={"Model"} value={car.model} />
               <TableRow title={"Body"} value={car.bodyType} />
-              <TableRow title={"State"} value={<span className='text-[#FFA500] font-semibold'>
-                {car.state}
-              </span>
-              } />
+              <TableRow
+                title={"State"}
+                value={
+                  <span className="text-[#FFA500] font-semibold">
+                    {car.state}
+                  </span>
+                }
+              />
             </tbody>
           </table>
         </div>
-        <div className="w-full sm:w-9/12">
-          {car.description}
-        </div>
+        <div className="w-full sm:w-9/12">{car.description}</div>
       </div>
     </div>
   );

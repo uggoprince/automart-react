@@ -3,7 +3,8 @@ const BgImage = (props: any) => {
   return (
     <div
       className="h-auto w-full relative block bg-cover bg-center"
-      style={{backgroundImage:`url(${imgSrc || '/cars.jpg'})`}}>
+      style={{ backgroundImage: `url(${imgSrc || "/cars.jpg"})` }}
+    >
       {children}
     </div>
   );
