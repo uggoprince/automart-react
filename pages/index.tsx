@@ -1,25 +1,32 @@
-import type { NextPage, InferGetStaticPropsType } from 'next';
-import Head from '../components/header/head';
-import Header from '../layouts/home/header';
-// import styles from '../styles/Home.module.css';
-import { BaseLayout } from '../layouts/base-layout';
-import Backdrop from '../components/background/backdrop';
-import BgImage from '../components/background/bg-image';
-import { getCars, Cars } from '../data/cars';
-// import { BodyLayout } from '../layouts/body-layout';
-import HomeBody from '../layouts/home/body';
-import { Card } from '../components/card';
+import React from "react";
+import type { NextPage } from "next";
+import PropTypes from 'prop-types';
+import Head from "../components/header/head";
+import Header from "../layouts/header";
+import { BaseLayout } from "../layouts/base-layout";
+import Backdrop from "../components/background/backdrop";
+import BgImage from "../components/background/bg-image";
+import { getCars, Car } from "../data/cars";
+import { Card } from "../components/card";
+import { useAuth } from "../auth/AuthContext";
 
-const Home: NextPage = (props) => {
-  const { cars }: any = props;
+interface HomeProps {
+  cars: Array<Car>;
+}
+
+const Home: NextPage<HomeProps> = (props) => {
+  const { cars } = props;
+  const { getAuthUser } = useAuth();
+  const authData = getAuthUser();
   return (
     <BaseLayout>
-      <Head/>
+      <Head />
       <BgImage>
-        <Header/>
+        <Header authData={authData} />
         <Backdrop>
-          <main className='h-screen block box-border pt-[66px] overflow-y-auto px-5'>
-            <div className='w-full
+          <main className="h-screen block box-border pt-[0px] overflow-y-auto px-5">
+            <div
+              className="w-full
               min-h-full
               grid
               grid-cols-1
@@ -31,9 +38,9 @@ const Home: NextPage = (props) => {
               place-content-start
               py-5
               gap-8
-              box-border'
+              box-border"
             >
-              {cars.map((car: any) => {
+              {cars.map((car: Car) => {
                 return <Card car={car} key={car._id} />;
               })}
             </div>
@@ -41,8 +48,8 @@ const Home: NextPage = (props) => {
         </Backdrop>
       </BgImage>
     </BaseLayout>
-  )
-}
+  );
+};
 
 // This gets called on every request
 export async function getServerSideProps() {
@@ -52,5 +59,8 @@ export async function getServerSideProps() {
   // Pass data to the page via props
   return { props: { cars } };
 }
+Home.propTypes = {
+  cars: PropTypes.array.isRequired,
+};
 
-export default Home
+export default Home;

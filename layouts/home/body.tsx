@@ -2,7 +2,7 @@ const HomeBody = (props: any) => {
   const { children }: any = props;
   return (
     <div
-      className='
+      className="
       w-full
       min-h-full
       flex
@@ -10,7 +10,8 @@ const HomeBody = (props: any) => {
       flex-wrap
       py-5
       gap-4
-      box-border bg-yellow-500'>
+      box-border bg-yellow-500"
+    >
       {children}
     </div>
   );
@@ -18,5 +19,3 @@ const HomeBody = (props: any) => {
 };
 
 export default HomeBody;
-
-  
