@@ -1,24 +1,27 @@
 import type { NextPage, InferGetStaticPropsType } from 'next';
 import Head from '../components/header/head';
-import Header from '../layouts/home/header';
+import Header from '../layouts/header';
 // import styles from '../styles/Home.module.css';
 import { BaseLayout } from '../layouts/base-layout';
 import Backdrop from '../components/background/backdrop';
 import BgImage from '../components/background/bg-image';
 import { getCars, Cars } from '../data/cars';
 // import { BodyLayout } from '../layouts/body-layout';
-import HomeBody from '../layouts/home/body';
+// import HomeBody from '../layouts/home/body';
 import { Card } from '../components/card';
+import { useAuth } from '../auth/AuthContext';
 
 const Home: NextPage = (props) => {
   const { cars }: any = props;
+  const { getAuthUser } = useAuth();
+  const authData = getAuthUser();
   return (
     <BaseLayout>
       <Head/>
       <BgImage>
-        <Header/>
+        <Header authData={authData} />
         <Backdrop>
-          <main className='h-screen block box-border pt-[66px] overflow-y-auto px-5'>
+          <main className='h-screen block box-border pt-[0px] overflow-y-auto px-5'>
             <div className='w-full
               min-h-full
               grid

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { BaseLayout } from '../../layouts/base-layout';
 import Head from '../../components/header/head';
 import BgImage from "../../components/background/bg-image";
-import Header from "../../layouts/home/header";
+import Header from "../../layouts/header";
 import Backdrop from "../../components/background/backdrop";
 import { getCarAndOwner } from "../../data/cars";
 import { CardBig } from "../../components/card/big-card";

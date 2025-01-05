@@ -3,7 +3,7 @@ const Backdrop = (props: any) => {
   return (
     <div className="
     backdrop-blur-lg
-    box-border block bg-white/60">
+    box-border block bg-white/60 w-full h-full sticky overflow-hidden">
       {children}
     </div>
   );
