@@ -1,14 +1,14 @@
-import React from "react";
-import type { NextPage } from "next";
+import React from 'react';
+import type { NextPage } from 'next';
 import PropTypes from 'prop-types';
-import Head from "../components/header/head";
-import Header from "../layouts/header";
-import { BaseLayout } from "../layouts/base-layout";
-import Backdrop from "../components/background/backdrop";
-import BgImage from "../components/background/bg-image";
-import { getCars, Car } from "../data/cars";
-import { Card } from "../components/card";
-import { useAuth } from "../auth/AuthContext";
+import Head from '../components/header/head';
+import Header from '../layouts/header';
+import { BaseLayout } from '../layouts/base-layout';
+import Backdrop from '../components/background/backdrop';
+import BgImage from '../components/background/bg-image';
+import { getCars, Car } from '../data/cars';
+import { Card } from '../components/card';
+import { useAuth } from '../auth/AuthContext';
 
 interface HomeProps {
   cars: Array<Car>;
@@ -24,9 +24,9 @@ const Home: NextPage<HomeProps> = (props) => {
       <BgImage>
         <Header authData={authData} />
         <Backdrop>
-          <main className="h-screen block box-border pt-[0px] overflow-y-auto px-5">
+          <main className='h-screen block box-border pt-[0px] overflow-y-auto px-5'>
             <div
-              className="w-full
+              className='w-full
               min-h-full
               grid
               grid-cols-1
@@ -38,7 +38,7 @@ const Home: NextPage<HomeProps> = (props) => {
               place-content-start
               py-5
               gap-8
-              box-border"
+              box-border'
             >
               {cars.map((car: Car) => {
                 return <Card car={car} key={car._id} />;

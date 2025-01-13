@@ -1,16 +1,26 @@
-import Button from "@mui/material/Button";
+import MButton from '@mui/material/Button';
 
-export default (props: any) => {
-  const { text, handleClick, type, disable } = props;
+interface ButtonProps {
+  text: string;
+  handleClick: () => void;
+  type?: 'button' | 'submit' | 'reset'; // Limit valid types
+  disable?: boolean; // Optional prop for disabling the button
+  extra_css?: string; // Optional additional CSS classes
+}
+
+const Button = (props: ButtonProps) => {
+  const { text, handleClick, type = 'button', disable, extra_css = '' } = props;
   return (
-    <Button
+    <MButton
       disabled={disable}
       onClick={handleClick}
-      variant="contained"
+      variant='contained'
       type={type}
-      className="bg-blue-500 text-white px-4 py-4 rounded"
+      className={`bg-blue-500 text-white px-4 py-4 rounded ${extra_css}`}
     >
       {text}
-    </Button>
+    </MButton>
   );
 };
+
+export default Button;

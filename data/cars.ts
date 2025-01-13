@@ -1,5 +1,5 @@
 // import { GetStaticProps } from 'next';
-import { getApiUrl } from "../utilities/getEnvs";
+import { getApiUrl } from '../utilities/getEnvs';
 
 const apiUrl = getApiUrl();
 
@@ -15,7 +15,7 @@ export type Car = {
 export const getCars = async () => {
   try {
     const { data } = await fetch(`${apiUrl}/cars`).then((result) =>
-      result.json(),
+      result.json()
     );
     return {
       cars: data,
@@ -29,7 +29,7 @@ export const getCars = async () => {
 export const getCarAndOwner = async (id: string) => {
   try {
     const result = await fetch(`${apiUrl}/cars/${id}?getOwner=true`).then(
-      (result) => result.json(),
+      (result) => result.json()
     );
     const { data, statusCode, error } = result;
     if (statusCode === 200) return { car: data, error: null, statusCode };
