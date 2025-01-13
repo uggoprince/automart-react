@@ -1,8 +1,29 @@
-import TextField from "@mui/material/TextField";
+import TextField from '@mui/material/TextField';
 
-export const Input = (props: any) => {
-  const { label, required, error, errorText, type, defaultValue, css, name } =
-    props;
+interface InputProps {
+  label: string;
+  required?: boolean;
+  error?: boolean;
+  errorText?: string | null;
+  type?: string;
+  defaultValue?: string;
+  css?: string;
+  name?: string;
+  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export const Input = (props: InputProps) => {
+  const {
+    label,
+    required,
+    error,
+    errorText,
+    type,
+    defaultValue,
+    css,
+    name,
+    handleChange = () => {},
+  } = props;
   return (
     <TextField
       required={required}
@@ -15,6 +36,7 @@ export const Input = (props: any) => {
       value={defaultValue}
       className={css}
       name={name}
+      onChange={handleChange}
     />
   );
 };

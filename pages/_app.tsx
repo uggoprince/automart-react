@@ -1,7 +1,7 @@
-import React from "react";
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { AuthProvider } from "../auth/AuthContext";
+import React from 'react';
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import { AuthProvider } from '../auth/AuthContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -1,33 +1,27 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
-import pluginReact from "eslint-plugin-react";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+import prettier from "eslint-plugin-prettier";
 
-/** @type {import('eslint').Linter.Config[]} */
-export default [
-  { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
-  { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
-    // extends: [
-    //   // "plugin:prettier/recommended", // Add Prettier plugin recommendations
-    //   // "next",
-    //   // "next/core-web-vitals",
-    //   // "eslint:recommended",
-    //   // "plugin:@typescript-eslint/recommended",
-    //   // "plugin:react/recommended", "prettier"
-    // ],
-    // plugins: ["prettier", "next"], // Include Prettier plugin
-    // rules: {
-    //   "prettier/prettier": [
-    //     "error",
-    //     {
-    //       "singleQuote": true,
-    //       "semi": true
-    //     }
-    //   ], // Ensure Prettier formatting issues show as errors
-    // },
+    files: ["**/*.{js,jsx,ts,tsx}"], // Apply to JavaScript/TypeScript files
+    plugins: {
+      prettier,
+    },
+    rules: {
+      "prettier/prettier": "error", // Prettier violations as errors
+    },
+    ignores: ["node_modules/", ".next", ".out"], // Ignore these directories
   },
 ];
+
+export default eslintConfig;
