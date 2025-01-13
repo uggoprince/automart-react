@@ -39,7 +39,7 @@ const Signin: NextPage = () => {
       setSubmitButtonText('SIGN IN');
     }
   }, [loading]);
-  const handleSubmit = (e: Event) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     let hasErrors = false;
@@ -92,7 +92,7 @@ const Signin: NextPage = () => {
           <main className=' w-full h-screen py-4'>
             <section className=' mt-[0px]'>
               <div className=' w-full max-w-lg m-auto'>
-                <Form method='POST' handleSubmit={handleSubmit}>
+                <Form method='POST' handleSubmit={handleSubmit} title='Sign In'>
                   {loginError != '' && (
                     <div className=' py-3 text-red-500'>{loginError}</div>
                   )}

@@ -18,7 +18,7 @@ import Button from '../../components/button';
 import { Form } from '../../components/form';
 import { Input } from '../../components/input';
 import { PasswordInput } from '../../components/input/password_input';
-import { InputChangeEvent, JSONObject } from '../../utilities/types';
+import { InputChangeEvent } from '../../utilities/types';
 
 const Signup: NextPage = () => {
   const formInitialState: SignupUserPayload | SignupFormState = useMemo(
@@ -36,9 +36,8 @@ const Signup: NextPage = () => {
   const [formState, setFormState] = useState(formInitialState);
   const [loading, setLoading] = useState(false);
   const [submitButtonText, setSubmitButtonText] = useState('SIGN IN');
-  const [signupError, setSignupError] = useState<JSONObject | SignupFormState>(
-    {}
-  );
+  const [signupError, setSignupError] =
+    useState<SignupFormState>(formInitialState);
   const { setAuthUser, getAuthUser } = useAuth();
   const router = useRouter();
 
@@ -46,7 +45,7 @@ const Signup: NextPage = () => {
     if (loading) {
       setSubmitButtonText('Loading...');
       setErrors(formInitialState);
-      setSignupError({});
+      setSignupError(formInitialState);
     } else {
       setSubmitButtonText('SIGN UP');
     }
@@ -62,7 +61,7 @@ const Signup: NextPage = () => {
       setErrors(validationErrors);
     } else {
       if (Object.keys(signupError).length === 0) {
-        setSignupError({});
+        setSignupError(formInitialState);
       }
       setErrors(formInitialState);
       setLoading(true);
@@ -101,9 +100,10 @@ const Signup: NextPage = () => {
                       {Object.keys(signupError).map((key) => {
                         return (
                           <div key={key}>
-                            {signupError[key].map((value: string) => {
-                              return <span key={value}>{value}</span>;
-                            })}
+                            {Array.isArray(signupError[key]) &&
+                              signupError[key].map((value: string) => {
+                                return <span key={value}>{value}</span>;
+                              })}
                           </div>
                         );
                       })}

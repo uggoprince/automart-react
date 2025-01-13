@@ -1,17 +1,17 @@
-import { Button as MuiButton } from '@mui/material';
+import MButton from '@mui/material/Button';
 
 interface ButtonProps {
   text: string;
   handleClick: () => void;
-  type: string;
-  disable: boolean;
-  extra_css: string;
+  type?: 'button' | 'submit' | 'reset'; // Limit valid types
+  disable?: boolean; // Optional prop for disabling the button
+  extra_css?: string; // Optional additional CSS classes
 }
 
 const Button = (props: ButtonProps) => {
-  const { text, handleClick, type, disable, extra_css = '' } = props;
+  const { text, handleClick, type = 'button', disable, extra_css = '' } = props;
   return (
-    <MuiButton
+    <MButton
       disabled={disable}
       onClick={handleClick}
       variant='contained'
@@ -19,7 +19,7 @@ const Button = (props: ButtonProps) => {
       className={`bg-blue-500 text-white px-4 py-4 rounded ${extra_css}`}
     >
       {text}
-    </MuiButton>
+    </MButton>
   );
 };
 

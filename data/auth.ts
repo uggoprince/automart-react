@@ -24,6 +24,7 @@ export interface SignupFormState {
   lastName: string | null;
   phoneNumber: string | null;
   address: string | null;
+  [key: string]: string | null | undefined;
 }
 
 export const signinUser = async (formData: SigninUserPayload) => {
