@@ -10,8 +10,8 @@ interface HeaderLinkTypeProps {
 interface HyperLinkTypeProps {
   children: ReactNode;
   link: string;
-  title: string;
-  classList: string;
+  title?: string;
+  classList?: string;
   handleClick?: () => void;
 }
 

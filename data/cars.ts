@@ -10,6 +10,10 @@ export type Car = {
   model: string;
   year: number;
   price: number;
+  manufacturer?: string;
+  bodyType?: string;
+  title?: string;
+  state?: string;
 };
 
 export const getCars = async () => {
