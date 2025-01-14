@@ -12,11 +12,11 @@ export const Form = (props: FormProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className=' w-full p-4 rounded bg-white'
+      className='w-full p-4 rounded bg-white'
       method={method}
     >
       <div className={styles.formHeader}>
-        <h1 className='py-4'>{title}</h1>
+        <h1 className=''>{title}</h1>
       </div>
       <div className='w-auto h-auto'>{children}</div>
     </form>

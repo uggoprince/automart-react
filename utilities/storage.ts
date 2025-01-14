@@ -7,14 +7,6 @@ const encryptAuth = (userStr: string): string => {
   return CryptoJS.AES.encrypt(userStr, authKey).toString();
 };
 
-// const encryptAuth = (userStr: string) => {
-//   return CryptoJS.AES.encrypt(userStr, authKey);
-// };
-
-// const decryptAuth = (userStr: any) => {
-//   return CryptoJS.AES.decrypt(userStr, authKey).toString(CryptoJS.enc.Utf8);
-// };
-
 const decryptAuth = (encryptedStr: string): string | null => {
   try {
     const bytes = CryptoJS.AES.decrypt(encryptedStr, authKey);
@@ -24,23 +16,6 @@ const decryptAuth = (encryptedStr: string): string | null => {
     return null;
   }
 };
-
-// export const saveAuth = (user: any) => {
-//   const encryptedUser: any = encryptAuth(JSON.stringify(user));
-//   window.localStorage.setItem(authKey, encryptedUser);
-// };
-
-// export const getAuth = () => {
-//   if (typeof window !== 'undefined') {
-//     const storedAuth = window.localStorage.getItem(authKey);
-//     if (storedAuth != null) {
-//       const authStr = decryptAuth(storedAuth);
-//       return JSON.parse(authStr);
-//     }
-//     return null;
-//   }
-//   return null;
-// };
 
 export const saveAuth = (user: Record<string, unknown>): void => {
   try {
@@ -69,4 +44,14 @@ export const getAuth = (): Record<string, unknown> | null => {
     }
   }
   return null;
+};
+
+export const removeAuth = (): void => {
+  try {
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem('auth');
+    }
+  } catch (error) {
+    console.error('Failed to remove data:', error);
+  }
 };
