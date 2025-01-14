@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
-import Image from "next/image";
+import Image from 'next/image';
 
-const Header = ({ children }: any) => {
+import { ReactNode } from 'react';
+
+const Header = ({ children }: { children: ReactNode }) => {
   return (
     <header
-      className="
+      className='
       px-5
       py-3
       sm:py-2
@@ -12,11 +14,11 @@ const Header = ({ children }: any) => {
       shadow-md
       justify-between
       flex
-      flex-row w-full sticky top-0 left-0 right-0 bg-white z-10"
+      flex-row w-full sticky top-0 left-0 right-0 bg-white z-10'
     >
       <Image
-        className=""
-        src={"/apple-touch-icon.svg"}
+        className=''
+        src={'/apple-touch-icon.svg'}
         width={40}
         height={40}
       />

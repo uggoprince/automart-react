@@ -1,13 +1,9 @@
 import { NextPage } from 'next';
-import { BaseLayout } from '../../layouts/base-layout';
-import HeaderLayout from '../../layouts/header';
 import { Form } from '../../components/form';
 import { Input } from '../../components/input';
 import { PasswordInput } from '../../components/input/password_input';
-import BgImage from '../../components/background/bg-image';
-import Backdrop from '../../components/background/backdrop';
 import Button from '../../components/button';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { isPasswordValid, isValidEmail } from '../../utilities/validate';
 import {
   invalidEmailErrorText,
@@ -18,56 +14,66 @@ import { ToastError, ToastSuccess } from '../../components/toast';
 import { useAuth } from '../../auth/AuthContext';
 import { saveAuth } from '../../utilities/storage';
 import { useRouter } from 'next/router';
+import GeneralLayout from '../../layouts/gen-layout';
 
-type ValidationErrors = { email: string | null; password: string | null };
+type FormState = {
+  email?: string | null;
+  password?: string | null;
+  [key: string]: string | null | undefined;
+};
 
 const Signin: NextPage = () => {
-  const formInitialState: ValidationErrors = {
-    email: null,
-    password: null,
-  };
+  const formInitialState: FormState = useMemo(
+    () => ({
+      email: null,
+      password: null,
+    }),
+    []
+  );
   const [errors, setErrors] = useState(formInitialState);
   const [loading, setLoading] = useState(false);
   const [submitButtonText, setSubmitButtonText] = useState('SIGN IN');
-  const [loginError, setLoginError] = useState('');
-  const { setAuthUser, getAuthUser } = useAuth();
+  const [loginError, setLoginError] = useState<FormState>({});
+  const { setAuthUser } = useAuth();
   const router = useRouter();
   useEffect(() => {
     if (loading) {
       setSubmitButtonText('Loading...');
+      setErrors(formInitialState);
+      setLoginError(formInitialState);
     } else {
       setSubmitButtonText('SIGN IN');
     }
-  }, [loading]);
+    if (Object.keys(loginError).length > 0) {
+      setErrors({ ...loginError });
+    }
+  }, [loading, loginError, formInitialState]);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     let hasErrors = false;
-    const validationErrors: ValidationErrors = { email: null, password: null };
+    const validationErrors: FormState = { email: null, password: null };
     const email = form.email.value;
     const password = form.password.value;
     if (!isValidEmail(email)) {
       hasErrors = true;
-      // validationErrors.errors.email = invalidEmailErrorText;
       validationErrors['email'] = invalidEmailErrorText;
     }
     if (!isPasswordValid(password)) {
       hasErrors = true;
-      // validationErrors.errors.password = invalidPasswordErrorText;
       validationErrors['password'] = invalidPasswordErrorText;
     }
     if (hasErrors) {
       setErrors(validationErrors);
     } else {
-      if (loginError != '') {
-        setLoginError('');
+      if (Object.keys(loginError).length > 0) {
+        setLoginError({});
       }
       setErrors(formInitialState);
       setLoading(true);
       signinUser({ email, password })
         .then((response) => {
           const { statusCode, message, data } = response;
-          console.log(data);
           if (statusCode >= 200 && statusCode <= 202) {
             ToastSuccess({ message });
             saveAuth(data);
@@ -85,49 +91,53 @@ const Signin: NextPage = () => {
     }
   };
   return (
-    <BaseLayout>
-      <BgImage>
-        <HeaderLayout authData={getAuthUser()} />
-        <Backdrop>
-          <main className=' w-full h-screen py-4'>
-            <section className=' mt-[0px]'>
-              <div className=' w-full max-w-lg m-auto'>
-                <Form method='POST' handleSubmit={handleSubmit} title='Sign In'>
-                  {loginError != '' && (
-                    <div className=' py-3 text-red-500'>{loginError}</div>
-                  )}
-                  <section className='grid gap-6'>
-                    <Input
-                      name='email'
-                      required={true}
-                      label={'Email'}
-                      type='email'
-                      error={errors.email != null}
-                      errorText={errors.email}
-                    />
-                    <PasswordInput
-                      name='password'
-                      required={true}
-                      error={errors.password != null}
-                      errorText={errors.password}
-                    />
-                    {/* <section className="form-block">
-                                    <input type="submit" value="SIGN IN" />
-                                </section> */}
-                    <Button
-                      disable={loading}
-                      type='submit'
-                      handleClick={() => {}}
-                      text={submitButtonText}
-                    />
-                  </section>
-                </Form>
-              </div>
-            </section>
-          </main>
-        </Backdrop>
-      </BgImage>
-    </BaseLayout>
+    <GeneralLayout>
+      <main className='w-full h-screen py-4'>
+        <section className=''>
+          <div className='w-full max-w-lg m-auto'>
+            <Form method='POST' handleSubmit={handleSubmit} title='Sign In'>
+              {Object.keys(loginError).length > 0 && (
+                <div className='py-3 text-red-500 border-b border-gray-300'>
+                  {Object.keys(loginError).map((key) => {
+                    return (
+                      <div key={key}>
+                        {Array.isArray(loginError[key]) &&
+                          loginError[key].map((value: string) => {
+                            return <span key={value}>{value}</span>;
+                          })}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              <section className='grid gap-6 overflow-y-auto max-h-96 py-2 rounded shadow-inner'>
+                <Input
+                  name='email'
+                  required={true}
+                  label={'Email'}
+                  type='email'
+                  error={errors.email != null}
+                  errorText={errors.email}
+                />
+                <PasswordInput
+                  name='password'
+                  required={true}
+                  error={errors.password != null}
+                  errorText={errors.password}
+                />
+              </section>
+              <Button
+                disable={loading}
+                type='submit'
+                handleClick={() => {}}
+                text={submitButtonText}
+                extra_css='mt-5 w-full'
+              />
+            </Form>
+          </div>
+        </section>
+      </main>
+    </GeneralLayout>
   );
 };
 

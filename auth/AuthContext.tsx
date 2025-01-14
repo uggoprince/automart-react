@@ -6,13 +6,14 @@ import {
   ReactNode,
   useState,
   useEffect,
-} from "react";
-import { getAuth } from "../utilities/storage";
+} from 'react';
+import { getAuth } from '../utilities/storage';
+import { JSONObject } from '../utilities/types';
 
 // Define the context type
 interface AuthContextType {
-  setAuthUser: (user: any) => void;
-  getAuthUser: () => any | null;
+  setAuthUser: (user: JSONObject | null) => void;
+  getAuthUser: () => JSONObject | null;
 }
 
 // Create the AuthContext with the type, defaulting to null
@@ -24,17 +25,17 @@ interface AuthProviderProps {
 
 // Provide the AuthContext to the entire app
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  let storedUser: any = getAuth();
-  const [auth, setAuth] = useState(storedUser);
-  // const storedUser = getAuth();
+  const [auth, setAuth] = useState<JSONObject | null>(
+    getAuth() as JSONObject | null
+  );
   // useRef to hold the auth token
   useEffect(() => {
-    storedUser = getAuth();
-    setAuth(storedUser);
+    const storedUser = getAuth();
+    setAuth(storedUser as JSONObject | null);
   }, []);
-  const authRef = useRef<any | null>(auth);
+  const authRef = useRef<JSONObject | null>(auth);
 
-  const setAuthUser = (user: any) => {
+  const setAuthUser = (user: JSONObject | null) => {
     authRef.current = user;
   };
 
@@ -51,7 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

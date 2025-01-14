@@ -1,14 +1,9 @@
 import React from 'react';
 import type { NextPage } from 'next';
 import PropTypes from 'prop-types';
-import Head from '../components/header/head';
-import Header from '../layouts/header';
-import { BaseLayout } from '../layouts/base-layout';
-import Backdrop from '../components/background/backdrop';
-import BgImage from '../components/background/bg-image';
 import { getCars, Car } from '../data/cars';
 import { Card } from '../components/card';
-import { useAuth } from '../auth/AuthContext';
+import GeneralLayout from '../layouts/gen-layout';
 
 interface HomeProps {
   cars: Array<Car>;
@@ -16,17 +11,11 @@ interface HomeProps {
 
 const Home: NextPage<HomeProps> = (props) => {
   const { cars } = props;
-  const { getAuthUser } = useAuth();
-  const authData = getAuthUser();
   return (
-    <BaseLayout>
-      <Head />
-      <BgImage>
-        <Header authData={authData} />
-        <Backdrop>
-          <main className='h-screen block box-border pt-[0px] overflow-y-auto px-5'>
-            <div
-              className='w-full
+    <GeneralLayout>
+      <main className='h-screen block box-border pt-[0px] overflow-y-auto px-5'>
+        <div
+          className='w-full
               min-h-full
               grid
               grid-cols-1
@@ -39,15 +28,13 @@ const Home: NextPage<HomeProps> = (props) => {
               py-5
               gap-8
               box-border'
-            >
-              {cars.map((car: Car) => {
-                return <Card car={car} key={car._id} />;
-              })}
-            </div>
-          </main>
-        </Backdrop>
-      </BgImage>
-    </BaseLayout>
+        >
+          {cars.map((car: Car) => {
+            return <Card car={car} key={car._id} />;
+          })}
+        </div>
+      </main>
+    </GeneralLayout>
   );
 };
 
