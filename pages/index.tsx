@@ -17,15 +17,9 @@ const Home: NextPage<HomeProps> = (props) => {
         <div
           className='w-full
               min-h-full
-              grid
-              grid-cols-1
-              sm:grid-cols-1
-              md:grid-cols-2
-              lg:grid-cols-2
-              xl:grid-cols-3
-              2xl:grid-cols-4
-              place-content-start
-              py-5
+              grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))]
+              py-8
+              mb-16
               gap-8
               box-border'
         >
@@ -37,6 +31,14 @@ const Home: NextPage<HomeProps> = (props) => {
     </GeneralLayout>
   );
 };
+
+// grid
+// grid-cols-1
+// sm:grid-cols-1
+// md:grid-cols-2
+// lg:grid-cols-2
+// xl:grid-cols-3
+// 2xl:grid-cols-4
 
 // This gets called on every request
 export async function getServerSideProps() {

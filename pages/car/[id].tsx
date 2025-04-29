@@ -17,7 +17,7 @@ const Car: NextPage<CarProps> = (props) => {
   if (statusCode === 200) {
     return (
       <GeneralLayout>
-        <main className='h-screen block box-border pt-[66px] overflow-y-auto px-5'>
+        <main className='h-screen block box-border pt-[0px] overflow-y-auto px-5'>
           <div className='py-5'>
             <CardBig car={car} />
           </div>
